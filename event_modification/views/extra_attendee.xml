@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_event_registration_form_extra_attendee" model="ir.ui.view">
+        <field name="name">event.add.attendee.form</field>
+        <field name="model">event.registration</field>
+        <field name="inherit_id" ref="event.view_event_registration_form"/>
+        <field name="arch" type="xml">
+            <data>
+
+                <xpath expr="//field[@name='phone']" position="attributes">
+                      <attribute name="attrs">{'required':[('email','=', False)]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='email']" position="attributes">
+                      <attribute name="attrs">{'required':[('phone','=', False)]}</attribute>
+                </xpath>
+
+                <xpath expr="//group//field[@name='partner_id']" position="before">
+                     <field name="project_id" />
+                </xpath>
+
+                <xpath expr="//group[@name='event']" position="after">
+
+                        <group string="Extra Attendee" >
+                                <field name="extraNumber" placeholder="Number of extra person" />
+                                <field name="extraNotes" placeholder="add more information about this extra person eg. wife and two friends of the attendee" />
+                        </group>
+
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+
+
+    <record id="view_event_registration_tree_attendee" model="ir.ui.view">
+        <field name="name">event.add.attendee.tree</field>
+        <field name="model">event.registration</field>
+        <field name="inherit_id" ref="event.view_event_registration_tree"/>
+        <field name="arch" type="xml">
+            <data>
+
+                <xpath expr="//field[@name='is_client']" position="after">
+                    <field name="project_id" string="Project"/>
+                    <field name="extraNumber" string="No.Extra Attendee" />
+                    <field name="extraNotes" string="Extra info" />
+
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_event_event_form_product" model="ir.ui.view">
+        <field name="name">event.add.Product.form</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="event.view_event_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//h1//field[@name='name']/.." position="attributes">
+                         <attribute name="required"> True </attribute>
+                </xpath>
+
+                <!--<xpath expr="//h1//field[@name='name']/.." position="after">
+                    <group>
+
+                        <field name="product_id" placeholder="Choose A product for the site visit"  attrs="{'required': [('product_id','!=', 'False')]}"/>
+                    </group>
+                </xpath> -->
+            </data>
+        </field>
+    </record>
+
+    <record id="view_event_form_product_search" model="ir.ui.view">
+        <field name="name">event.add.product.search</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="event.view_event_search"/>
+        <field name="arch" type="xml">
+            <data>
+
+                <xpath expr="//field[@name='name']" position="after">
+
+                    <field name="product_id"  string="Products"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+    <record id="view_event_form_product_tree" model="ir.ui.view">
+        <field name="name">event.add.product.tree</field>
+        <field name="model">event.event</field>
+        <field name="inherit_id" ref="event.view_event_tree"/>
+        <field name="arch" type="xml">
+            <data>
+
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="product_id" string="Product" />
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+</odoo>
