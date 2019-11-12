@@ -1,0 +1,41 @@
+<odoo>
+    <record model="ir.ui.view" id="event_site_visit_report_wizard">
+        <field name="name">Event site visit Report</field>
+        <field name="model">event.site.visit.report.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string=" Site visit  Report">
+                <group>
+                    <group>
+                        <field name="start_date"/>
+                        <field name="event_ids" widget="many2many_tags" options="
+                                    {'no_create_edit': True}"/>
+
+
+                    </group>
+                    <group>
+                        <field name="end_date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="get_report" string="Get Report" type="object" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="action_event_site_visit_report_wizard"
+                name="Event site visit  Report"
+                res_model="event.site.visit.report.wizard"
+                view_mode="form"
+                target="new"/>
+
+    <menuitem action="action_event_site_visit_report_wizard"
+              id="menu_event_site_visit_report_wizard"
+              parent="event.menu_reporting_events"/>
+
+
+
+
+</odoo>

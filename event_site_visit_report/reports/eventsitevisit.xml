@@ -1,0 +1,137 @@
+<odoo>
+    <record model="report.paperformat" id="paperformat_event_site_visit_report">
+        <field name="name">paperformat.event.site.visit.report</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_width">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">30</field>
+        <field name="margin_right">3</field>
+        <field name="margin_bottom">15</field>
+        <field name="margin_left">3</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">25</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report id="site_visit_report"
+            model="event.site.visit.report.wizard"
+            string=" Site visit  Report"
+            report_type="qweb-html"
+            name="event_site_visit_report.event_site_visit_report_view"
+            paperformat="paperformat_event_site_visit_report"
+            menu="False"/>
+
+    <template id="event_site_visit_report_view">
+        <style type="text/css">
+            .table .thread-light th{
+                color: #401500;
+                background-colour: #FFDDCC;
+                border-color: #792700;
+            }
+            .table-condensed > thead > tr > th{
+                border-bottom: 1px solid black !important;
+            }
+
+        </style>
+         <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <page>
+                    <div class="oe_structure"/>
+                    <div class="row">
+                    <center>
+                        <b>
+                            <h4>Event Site Visit  Report </h4>
+                        </b>
+                    </center>
+                    <center>
+                        <b>
+                            <span t-esc="start_date"/>
+                            To
+                            <span t-esc="end_date"/>
+                        </b>
+                    </center>
+                    </div>
+                    <br/>
+                    <t t-foreach="data.keys()" t-as="event">
+                        <center>
+                            <b>
+                                <span>Sites :</span>
+                                <h4><span t-esc="event"/></h4>
+
+                            </b>
+                        </center>
+                        <div class="article">
+                        <table class="table table-condensed  table-hover" style="border: 1px solid black; width:100%">
+                            <thead class="thread-light">
+                                <tr>
+
+                                    <th class="text-center" style="border: 1px solid black; width:15%">Attendee</th>
+                                    <th class="text-center" style="border: 1px solid black; width:10%" >Reg Date</th>
+                                    <th class="text-center" style="border: 1px solid black; width:10%" >Project</th>
+                                    <th class="text-center" style="border: 1px solid black; width:10%" >Attended</th>
+                                    <th class="text-center" style="border: 1px solid black; width:10%">PhoneNo</th>
+                                    <th class="text-center" style="border: 1px solid black; width:10%">Email</th>
+                                    <th class="text-center"  style="border: 1px solid black; width:10%">Client type</th>
+                                    <th class="text-center"  style="border: 1px solid black; width:5%">Extra</th>
+                                    <th class="text-center" style="border: 1px solid black; width:15%">Sales RM</th>
+                                    <th class="text-center" style="border: 1px solid black; width:5%">Status</th>
+                                </tr>
+                            </thead>
+                                <tbody>
+
+                                <tr t-foreach="data[event]" t-as="attendee">
+                                    <td  class="text-left" style="border: 1px solid black;">
+                                        <span t-esc="attendee[0]" widget="date"
+                                              t-field-options="{'format': 'dd/mm/yyyy'}"/>
+
+                                    </td>
+                                    <td class="text-left" style="border: 1px solid black; ">
+                                        <span t-esc="attendee[1]"/>
+                                    </td>
+                                    <td class="text-left" style="border: 1px solid black;">
+                                        <span t-esc="attendee[2]"/>
+
+                                    </td>
+                                    <td class="text-left" style="border: 1px solid black;">
+                                        <span t-esc="attendee[3]"/>
+
+                                    </td>
+                                    <td class="text-left"  style="border: 1px solid black;">
+                                        <span t-esc="attendee[4]"/>
+
+                                    </td>
+                                    <td class="text-left" style="border: 1px solid black;">
+                                        <span t-esc="attendee[5]"/>
+
+                                    </td>
+                                    <td class="text-left" style="border: 1px solid black;">
+                                        <span t-esc="attendee[6]"/>
+
+                                    </td>
+                                    <td class="text-left" style="border: 1px solid black;">
+                                        <span t-esc="attendee[7]"/>
+
+                                    </td>
+                                    <td class="text-left" style="border: 1px solid black;">
+                                        <span t-esc="attendee[8]"/>
+
+                                    </td>
+                                    <td class="text-left" style="border: 1px solid black;">
+                                        <span t-esc="attendee[9]"/>
+
+                                    </td>
+
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                        </div>
+                    </t>
+                </page>
+            </t>
+        </t>
+    </template>
+</odoo>
