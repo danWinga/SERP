@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_calendar_event_form_feedback" model="ir.ui.view">
+        <field name="name">Add Activity Feedback</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//group//field[@name='location']" position="attributes">
+                         <attribute name="required"> True </attribute>
+                </xpath>
+                <xpath expr="//notebook//page//field[@name='description']" position="attributes">
+                         <attribute name="required"> True </attribute>
+                </xpath>
+
+                <xpath expr="//notebook//page//field[@name='description']" position="after">
+
+                    <label for="feedback"/>
+                    <field name="feedback" />
+                </xpath>
+            </data>
+        </field>
+    </record>
+
+</odoo>
