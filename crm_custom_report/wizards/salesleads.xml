@@ -1,0 +1,36 @@
+<odoo>
+    <record model="ir.ui.view" id="leads_sales_report_wizard">
+        <field name="name">CRM Sales Leads Report</field>
+        <field name="model">leads.sales.report.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string=" Sales person Leads  Report">
+                <group>
+                    <group>
+                        <field name="start_date"/>
+                        <field name="user_ids" widget="many2many_tags"/>
+
+
+                    </group>
+                    <group>
+                        <field name="end_date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="get_report" string="Get Report" type="object" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="action_leads_sales_report_wizard"
+                name="Sales Leads  Report"
+                res_model="leads.sales.report.wizard"
+                view_mode="form"
+                target="new"/>
+
+    <menuitem action="action_leads_sales_report_wizard"
+              id="menu_leads_report_wizard"
+              parent="crm.crm_menu_report"/>
+</odoo>
