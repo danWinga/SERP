@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="bank_statement_wiz" model="ir.ui.view">
+    <record id="bank_statement_unreconciled" model="ir.ui.view">
         <field name="name">bank.statement.reconciliation</field>
-        <field name="model">bank.statement</field>
+        <field name="model">bank.statement.unreconciled</field>
         <field name="arch" type="xml">
-            <form string="Bank Statement Reconciliation">
+            <form string="Unreconciled By Bank Statement Date">
                 <group>
                     <group>
                         <field name="journal_id"/>
@@ -43,16 +43,4 @@
     </record>
 
 
-
-
-    <record id="action_bank_statement_wiz" model="ir.actions.act_window">
-        <field name="name">Bank Statement Reconciliation</field>
-        <field name="res_model">bank.statement</field>
-        <field name="type">ir.actions.act_window</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">form</field>
-        <field name="target">new</field>
-    </record>
-
-    <menuitem id="menu_action_bank_reconciliation" parent="account.menu_finance_entries_actions" action="action_bank_statement_wiz" sequence="25"/>
 </odoo>

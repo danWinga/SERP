@@ -2,15 +2,15 @@
 from odoo import api, fields, models, _
 
 
-class BankStatement(models.Model):
-    _name = 'bank.statement'
+class BankStatementUnreconciled(models.Model):
+    _name = 'bank.statement.unreconciled'
 
     @api.onchange('journal_id', 'date_from', 'date_to')
     def _get_lines(self):
         self.account_id = self.journal_id.default_debit_account_id.id or self.journal_id.default_credit_account_id.id
         self.currency_id = self.journal_id.currency_id or self.journal_id.company_id.currency_id or \
                            self.env.user.company_id.currency_id
-        domain = [('account_id', '=', self.account_id.id), ('statement_date', '!=', False)]
+        domain = [('account_id', '=', self.account_id.id), ('statement_date', '=', False)]
         if self.date_from:
             domain += [('date', '>=', self.date_from)]
         if self.date_to:
@@ -45,7 +45,7 @@ class BankStatement(models.Model):
     date_from = fields.Date('Date From')
     date_to = fields.Date('Date To')
     statement_lines = fields.One2many('account.move.line', 'bank_statement_id')
-    gl_balance = fields.Monetary('Balance as per Company Books', readonly=True, store=True, compute='_compute_amount')
+    gl_balance = fields.Monetary('Balance as per Company Books', readonly=True, compute='_compute_amount')
     bank_balance = fields.Monetary('Balance as per Bank', readonly=True, compute='_compute_amount')
     balance_difference = fields.Monetary('Amounts not Reflected in Bank', readonly=True, compute='_compute_amount')
     current_update = fields.Monetary('Balance of entries updated now')

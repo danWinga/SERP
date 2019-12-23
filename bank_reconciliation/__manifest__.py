@@ -32,6 +32,7 @@
         'views/account_move_line_view.xml',
         'views/account_journal_dashboard_view.xml',
         'wizard/bank_statement_wiz_view.xml',
+        'wizard/bank_statement_unrec_view.xml',
     ],
     'images': ['static/description/banner.jpg'],
     'license': 'AGPL-3',
