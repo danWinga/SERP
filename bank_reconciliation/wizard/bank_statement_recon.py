@@ -2,15 +2,15 @@
 from odoo import api, fields, models, _
 
 
-class BankStatement(models.Model):
-    _name = 'bank.statement'
+class BankStatementRecon(models.Model):
+    _name = 'bank.statement.recon'
 
     @api.onchange('journal_id', 'date_from', 'date_to')
     def _get_lines(self):
         self.account_id = self.journal_id.default_debit_account_id.id or self.journal_id.default_credit_account_id.id
         self.currency_id = self.journal_id.currency_id or self.journal_id.company_id.currency_id or \
                            self.env.user.company_id.currency_id
-        domain = [('account_id', '=', self.account_id.id), ('statement_date', '=', False)]
+        domain = [('account_id', '=', self.account_id.id), ('statement_date', '!=', False)]
         if self.date_from:
             domain += [('date', '>=', self.date_from)]
         if self.date_to:
@@ -31,7 +31,7 @@ class BankStatement(models.Model):
         domain = [('account_id', '=', self.account_id.id)]
         lines = self.env['account.move.line'].search(domain)
         gl_balance += sum([line.debit - line.credit for line in lines])
-        domain += [('id', 'not in', self.statement_lines.ids), ('statement_date', '=', False)]
+        domain += [('id', 'not in', self.statement_lines.ids), ('statement_date', '!=', False)]
         lines = self.env['account.move.line'].search(domain)
         bank_balance += sum([line.balance for line in lines])
         current_update += sum([line.debit - line.credit if line.statement_date else 0 for line in self.statement_lines])
@@ -44,7 +44,7 @@ class BankStatement(models.Model):
     account_id = fields.Many2one('account.account', 'Bank Account')
     date_from = fields.Date('Date From')
     date_to = fields.Date('Date To')
-    statement_lines = fields.One2many('account.move.line', 'bank_statement_id')
+    statement_lines = fields.One2many('account.move.line', 'bank_statement_id', domain=[('reconciled', '!=', 'False')])
     gl_balance = fields.Monetary('Balance as per Company Books', readonly=True, store=True, compute='_compute_amount')
     bank_balance = fields.Monetary('Balance as per Bank', readonly=True, compute='_compute_amount')
     balance_difference = fields.Monetary('Amounts not Reflected in Bank', readonly=True, compute='_compute_amount')

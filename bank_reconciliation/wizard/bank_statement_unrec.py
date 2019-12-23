@@ -44,7 +44,8 @@ class BankStatementUnreconciled(models.Model):
     account_id = fields.Many2one('account.account', 'Bank Account')
     date_from = fields.Date('Date From')
     date_to = fields.Date('Date To')
-    statement_lines = fields.One2many('account.move.line', 'bank_statement_id')
+    statement_lines = fields.One2many('account.move.line', 'bank_statement_id', store=True,
+                                      domain=[('reconciled', '=', 'False')])
     gl_balance = fields.Monetary('Balance as per Company Books', readonly=True, compute='_compute_amount')
     bank_balance = fields.Monetary('Balance as per Bank', readonly=True, compute='_compute_amount')
     balance_difference = fields.Monetary('Amounts not Reflected in Bank', readonly=True, compute='_compute_amount')
@@ -52,5 +53,7 @@ class BankStatementUnreconciled(models.Model):
     currency_id = fields.Many2one('res.currency', string='Currency')
     company_id = fields.Many2one('res.company', string='Company',
                                  default=lambda self: self.env['res.company']._company_default_get('bank.statement'))
+
+
 
 

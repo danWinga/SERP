@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <record id="bank_statement_unreconciled" model="ir.ui.view">
-        <field name="name">bank.statement.reconciliation</field>
-        <field name="model">bank.statement.unreconciled</field>
+    <record id="bank_statement_recon" model="ir.ui.view">
+        <field name="name">bank.statement.reconciliation.report</field>
+        <field name="model">bank.statement.recon</field>
         <field name="arch" type="xml">
-            <form string="Unreconciled By Bank Statement Date">
+            <form string="Reconciled Journals by Bank Statement Date">
                 <group>
                     <group>
                         <field name="journal_id"/>
@@ -40,15 +40,20 @@
                     <field name="balance_difference"/>
                     <field name="bank_balance"/>
                 </group>
-                <footer>
-                    <button string='Print' name="print_bank_unreconciled"
-	                	type="object" class="btn-primary"
-                            help="Print in Pdf"/>
-                    <button string="Cancel" class="oe_link" special="cancel"/>
-                </footer>
             </form>
         </field>
     </record>
 
+
+<!--
+    <record id="action_bank_statement_recon" model="ir.actions.act_window">
+        <field name="name">Bank Statement Reconciliation</field>
+        <field name="res_model">bank.statement.recon</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+-->
 
 </odoo>
