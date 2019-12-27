@@ -146,7 +146,7 @@
     </template>
 
     <report id="action_report_bank_reconciliation"
-            model="bank.statement"
+            model="bank.statement.recon"
             string="Bank Reconciliation"
             report_type="qweb-pdf"
             name="accounting_reports_bank_reconciliation.report_bank_reconciliation"
@@ -157,13 +157,13 @@
     <!--FORM BANK RECONCILIATION-->
     <record id="view_bank_statement_report_form_inherit" model="ir.ui.view">
         <field name="name">bank.statement.report.form</field>
-        <field name="model">bank.statement</field>
+        <field name="model">bank.statement.recon</field>
 
         <!-- <field name="inherit_id" ref="bank_reconciliation.bank_statement_wiz"/> -->
         <field name="arch" type="xml">
 
-            <form string="Bank Statement Reconciliation">
-                <!-- <group>
+            <form>
+                <group>
                     <group>
                         <field name="journal_id"/>
                         <field name="account_id"/>
@@ -172,23 +172,31 @@
                         <field name="date_from"/>
                         <field name="date_to"/>
                     </group>
-                </group> -->
+                </group>
                 <group>
-                    <field name="statement_lines" nolabel="1" invisible="1">
-                        <tree create="false" editable="bottom" default_order="date">
+                    <field name="statement_lines" nolabel="1" invisible="1" >
+                        <tree create="false" editable="bottom" readonly="1" default_order="date">
                             <field name="date" readonly="True"/>
                             <field name="move_id" readonly="True" invisible="1" groups="account.group_account_user"/>
                             <field name="name" readonly="True"/>
                             <field name="ref" readonly="True"/>
+                            <field name="reconciled" />
+                            <field name="full_reconcile_id"/>
                             <field name="partner_id" readonly="True"/>
                             <field name="amount_currency" readonly="True" groups="base.group_multi_currency"/>
                             <field name="currency_id" readonly="True" invisible="1" />
                             <field name="date_maturity" readonly="True"/>
+                            <field name="statement_date" readonly="True"/>
                             <field name="company_currency_id" invisible="1" readonly="True"/>
                             <field name="debit" readonly="True"/>
                             <field name="credit" readonly="True"/>
                         </tree>
                     </field>
+                </group>
+                <group class="oe_subtotal_footer oe_right">
+                    <field name="gl_balance"/>
+                    <field name="balance_difference"/>
+                    <field name="bank_balance"/>
                 </group>
 
                 <footer>
@@ -205,17 +213,20 @@
 
     <record model="ir.actions.act_window" id="action_bank_statement_report">
             <field name="name">Bank Reconciliation Report</field>
-            <field name="res_model">bank.statement</field>
+            <field name="res_model">bank.statement.recon</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="view_bank_statement_report_form_inherit"/>
             <field name="target">new</field>
             <field name="view_type">form</field>
     </record>
-        <menuitem id="account_reports_reconciliation_menu" name="Bank Reconciliation" parent="account.menu_finance_reports" sequence="5"/>
 
-        <menuitem id="menu_action_bank_reconciliation_report" name="Reconciled by Bank Statement Date"
-                  parent="account_reports_reconciliation_menu" action="action_bank_statement_report"
-                  sequence="25"/>
+
+        <menuitem
+                id="menu_action_bank_reconciliation_report"
+                name="Reconciled by Bank Statement Date"
+                parent="account_reports_reconciliation_menu"
+                action="action_bank_statement_report"
+                sequence="25"/>
 
 
 

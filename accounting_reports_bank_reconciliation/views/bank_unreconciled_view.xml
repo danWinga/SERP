@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_unreconciled_report_view" model="ir.ui.view">
+        <field name="name">unreconciled Report</field>
+        <field name="model">bank.statement.unreconciled.rep</field>
+        <field name="arch" type="xml">
+        <form string="Report Options">
+            <field name="company_id" invisible="1"/>
+            <group>
+                    <group>
+                        <field name="journal_id"/>
+                        <field name="account_id"/>
+                    </group>
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+            </group>
+            <group>
+                    <field name="statement_lines" nolabel="1" >
+                        <tree create="false" editable="bottom" default_order="date">
+                            <field name="date" readonly="True"/>
+                            <field name="move_id" readonly="True" invisible="1" groups="account.group_account_user"/>
+                            <field name="name" readonly="True"/>
+                            <field name="ref" readonly="True"/>
+                            <field name="partner_id" readonly="True"/>
+                            <field name="amount_currency" readonly="True" groups="base.group_multi_currency"/>
+                            <field name="currency_id" readonly="True" invisible="1" />
+                            <field name="date_maturity" readonly="True"/>
+                            <field name="statement_date" readonly="True"/>
+                            <field name="company_currency_id" invisible="1" readonly="True"/>
+                            <field name="debit" readonly="True"/>
+                            <field name="credit" readonly="True"/>
+                        </tree>
+                    </field>
+            </group>
+
+            <group class="oe_subtotal_footer oe_right">
+                    <field name="gl_balance"/>
+                    <field name="balance_difference"/>
+                    <field name="bank_balance"/>
+            </group>
+
+            <footer>
+                    <button string='Print' name="print_bank_unreconciled"
+	                	type="object" class="btn-primary"
+                            help="Print in Pdf"/>
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+            </footer>
+        </form>
+        </field>
+    </record>
+
+
+
+    <record model="ir.actions.act_window" id="action_unreconciled_statement_report">
+            <field name="name">unreconciled Report</field>
+            <field name="res_model">bank.statement.unreconciled.rep</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">form</field>
+             <field name="view_id" ref="account_unreconciled_report_view"/>
+             <field name="target">new</field>
+
+    </record>
+<!--
+        <menuitem
+                id="menu_action_unreconciled_statement_report"
+                name="Unreconciled by Bank Statement Date"
+                parent="account_reports_reconciliation_menu"
+                action="action_unreconciled_statement_report"
+                sequence="5"/>
+                -->
+
+
+</odoo>

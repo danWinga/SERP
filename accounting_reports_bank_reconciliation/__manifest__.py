@@ -30,6 +30,8 @@
                 ],
 
     'data': [
+        'views/report_menu.xml',
+        'views/bank_unreconciled_view.xml',
         'views/report_bank_reconciliation.xml',
         'views/report_bank_unreconciled.xml',
     ],

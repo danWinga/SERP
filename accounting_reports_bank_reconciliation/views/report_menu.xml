@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+     <menuitem
+             id="account_reports_reconciliation_menu"
+             name="Bank Reconciliation"
+             parent="account.menu_finance_reports"
+             sequence="5"/>
+
+</odoo>
